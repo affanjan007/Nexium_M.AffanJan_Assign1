@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { getQuotesByTopic, type Quote } from '@/lib/quotes';
 
 interface QuoteDisplayProps {
@@ -5,7 +8,35 @@ interface QuoteDisplayProps {
 }
 
 export default function QuoteDisplay({ topic }: QuoteDisplayProps) {
-  const quotes = getQuotesByTopic(topic, 3);
+  const [quotes, setQuotes] = useState<Quote[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Generate quotes deterministically on client-side only
+    const generateQuotes = async () => {
+      setIsLoading(true);
+      // Add small delay to show loading state
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      // Get quotes with a deterministic seed based on topic
+      const topicQuotes = getQuotesByTopic(topic, 3, topic);
+      setQuotes(topicQuotes);
+      setIsLoading(false);
+    };
+
+    if (topic) {
+      generateQuotes();
+    }
+  }, [topic]);
+
+  if (isLoading) {
+    return (
+      <div className="text-center py-8">
+        <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+        <p className="text-gray-600 dark:text-gray-400">Loading quotes...</p>
+      </div>
+    );
+  }
 
   if (quotes.length === 0) {
     return (
@@ -22,7 +53,7 @@ export default function QuoteDisplay({ topic }: QuoteDisplayProps) {
   return (
     <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-1">
       {quotes.map((quote, index) => (
-        <QuoteCard key={quote.id} quote={quote} index={index} />
+        <QuoteCard key={`${quote.id}-${topic}`} quote={quote} index={index} />
       ))}
     </div>
   );

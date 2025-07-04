@@ -107,7 +107,31 @@ export const quotesDatabase: Quote[] = [
   }
 ];
 
-export function getQuotesByTopic(topic: string, limit: number = 3): Quote[] {
+// Simple hash function for deterministic randomization
+function hashString(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  return Math.abs(hash);
+}
+
+// Deterministic shuffle using seed
+function deterministicShuffle<T>(array: T[], seed: string): T[] {
+  const shuffled = [...array];
+  const hash = hashString(seed);
+  
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = (hash + i) % (i + 1);
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  
+  return shuffled;
+}
+
+export function getQuotesByTopic(topic: string, limit: number = 3, seed?: string): Quote[] {
   const normalizedTopic = topic.toLowerCase().trim();
 
   const matchingQuotes = quotesDatabase.filter(quote =>
@@ -118,7 +142,11 @@ export function getQuotesByTopic(topic: string, limit: number = 3): Quote[] {
   );
 
   if (matchingQuotes.length >= limit) {
-    return shuffleArray(matchingQuotes).slice(0, limit);
+    // Use deterministic shuffle if seed is provided
+    const shuffledQuotes = seed 
+      ? deterministicShuffle(matchingQuotes, seed)
+      : matchingQuotes;
+    return shuffledQuotes.slice(0, limit);
   }
 
   const inspirationalQuotes = quotesDatabase.filter(quote =>
@@ -128,16 +156,12 @@ export function getQuotesByTopic(topic: string, limit: number = 3): Quote[] {
   const combinedQuotes = [...matchingQuotes, ...inspirationalQuotes];
   const uniqueQuotes = removeDuplicates(combinedQuotes);
 
-  return shuffleArray(uniqueQuotes).slice(0, limit);
-}
-
-function shuffleArray<T>(array: T[]): T[] {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
+  // Use deterministic shuffle if seed is provided
+  const shuffledQuotes = seed 
+    ? deterministicShuffle(uniqueQuotes, seed)
+    : uniqueQuotes;
+    
+  return shuffledQuotes.slice(0, limit);
 }
 
 function removeDuplicates(quotes: Quote[]): Quote[] {

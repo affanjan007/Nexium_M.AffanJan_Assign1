@@ -10,14 +10,17 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
       <div className="text-center space-y-8 max-w-md mx-auto">
+        {/* Error icon with animation */}
         <div className="relative">
           <div className="w-20 h-20 mx-auto bg-red-500/10 rounded-full flex items-center justify-center border border-red-500/20">
             <div className="text-4xl animate-pulse">⚠️</div>
           </div>
           
+          {/* Ripple effect */}
           <div className="absolute inset-0 w-20 h-20 mx-auto border-2 border-red-500/30 rounded-full animate-ping"></div>
         </div>
 
+        {/* Error content */}
         <div className="space-y-4">
           <h2 className="text-2xl font-bold text-red-400">
             Oops! Something went wrong
@@ -26,6 +29,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
             We encountered an unexpected error while generating your quotes. 
           </p>
           
+          {/* Error details (only in development) */}
           {process.env.NODE_ENV === 'development' && (
             <div className="card-glass p-4 mt-4 text-left">
               <p className="text-xs text-gray-500 font-mono break-all">
@@ -35,6 +39,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
           )}
         </div>
 
+        {/* Action buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={() => reset()}
@@ -51,6 +56,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
           </button>
         </div>
 
+        {/* Helpful message */}
         <div className="text-sm text-gray-500 space-y-2">
           <p>If the problem persists, try:</p>
           <ul className="text-xs space-y-1">

@@ -1,16 +1,25 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ServerQuoteDisplay from './server-quote-display';
 
 export default function ClientQuoteDisplay() {
   const searchParams = useSearchParams();
-  const topic = searchParams.get('topic');
+  const [topic, setTopic] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
   const quotesRef = useRef<HTMLDivElement>(null);
 
+  // Handle client-side hydration
   useEffect(() => {
-    if (topic && quotesRef.current) {
+    setIsClient(true);
+    const urlTopic = searchParams.get('topic');
+    setTopic(urlTopic);
+  }, [searchParams]);
+
+  // Handle scrolling and highlighting after topic is set
+  useEffect(() => {
+    if (topic && quotesRef.current && isClient) {
       const scrollTimer = setTimeout(() => {
         quotesRef.current?.scrollIntoView({ 
           behavior: 'smooth', 
@@ -30,9 +39,10 @@ export default function ClientQuoteDisplay() {
       
       return () => clearTimeout(scrollTimer);
     }
-  }, [topic]);
+  }, [topic, isClient]);
 
-  if (!topic) return null;
+  // Don't render anything until client-side hydration is complete
+  if (!isClient || !topic) return null;
 
   return (
     <div 
