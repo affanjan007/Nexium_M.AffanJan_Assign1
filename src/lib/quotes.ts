@@ -104,6 +104,85 @@ export const quotesDatabase: Quote[] = [
     text: "Life is what happens to you while you're busy making other plans.",
     author: "John Lennon",
     topic: ["inspiration", "life", "present", "mindfulness"]
+  },
+  // Time Management
+  {
+    id: "16",
+    text: "Time isn't the main thing. It's the only thing.",
+    author: "Miles Davis",
+    topic: ["time management", "priorities", "focus", "life"]
+  },
+  {
+    id: "17",
+    text: "Lost time is never found again.",
+    author: "Benjamin Franklin",
+    topic: ["time management", "discipline", "productivity", "wisdom"]
+  },
+  {
+    id: "18",
+    text: "The bad news is time flies. The good news is you're the pilot.",
+    author: "Michael Altshuler",
+    topic: ["time management", "control", "life", "motivation"]
+  },
+
+  // Resilience
+  {
+    id: "19",
+    text: "Fall seven times, stand up eight.",
+    author: "Japanese Proverb",
+    topic: ["resilience", "perseverance", "grit", "courage"]
+  },
+  {
+    id: "20",
+    text: "Our greatest glory is not in never falling, but in rising every time we fall.",
+    author: "Confucius",
+    topic: ["resilience", "growth", "failure", "strength"]
+  },
+  {
+    id: "21",
+    text: "Hard times may have held you down, but they will not last forever.",
+    author: "Joel Osteen",
+    topic: ["resilience", "hope", "endurance", "mindset"]
+  },
+
+  // Focus
+  {
+    id: "22",
+    text: "The successful warrior is the average man, with laser-like focus.",
+    author: "Bruce Lee",
+    topic: ["focus", "discipline", "success", "mindset"]
+  },
+  {
+    id: "23",
+    text: "Focus means eliminating distractions, not just paying attention.",
+    author: "Tim Grover",
+    topic: ["focus", "clarity", "productivity", "concentration"]
+  },
+  {
+    id: "24",
+    text: "Where focus goes, energy flows.",
+    author: "Tony Robbins",
+    topic: ["focus", "energy", "intention", "motivation"]
+  },
+
+  // Self-Discipline
+  {
+    id: "25",
+    text: "Discipline is the bridge between goals and accomplishment.",
+    author: "Jim Rohn",
+    topic: ["self-discipline", "goals", "success", "achievement"]
+  },
+  {
+    id: "26",
+    text: "The first and best victory is to conquer self.",
+    author: "Plato",
+    topic: ["self-discipline", "self-control", "mindset", "growth"]
+  },
+  {
+    id: "27",
+    text: "We do today what they won’t, so tomorrow we can accomplish what they can’t.",
+    author: "Dwayne Johnson",
+    topic: ["self-discipline", "grit", "determination", "sacrifice"]
   }
 ];
 
