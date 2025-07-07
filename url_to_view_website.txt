@@ -1,0 +1,6 @@
+Hosting Link:
+https://nexium-m-affan-jan-assign1.vercel.app/
+
+
+github repo link:
+https://github.com/affanjan007/Nexium_M.AffanJan_Assign1
